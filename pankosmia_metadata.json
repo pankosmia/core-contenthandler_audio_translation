@@ -1,0 +1,20 @@
+{
+    "id": "core-contenthandler_audio_translation",
+    "exclude_from_menu": true,
+    "exclude_from_dashboard": true,
+    "minServerVersion": "0.16.1",
+    "require": {
+        "net": false,
+        "debug": false
+    },
+    "endpoints": {
+        "audioTranslation": {
+            "create_document": {
+                "doc": "Create document for audio translation project",
+                "placeHolders": {},
+                "label": "pages:core-contenthandler_audio_translation:new_audio_translation",
+                "url": "/createDocument/audioTranslation"
+            }
+        }
+    }
+}
