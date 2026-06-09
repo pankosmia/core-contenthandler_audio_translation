@@ -32,14 +32,14 @@
             "es": "Los documentos van aquí"
         },
         "new_audio_translation": {
-            "en": "New Audio Translation",
-            "fr": "Nouvelle traduction audio",
-            "es": "Nueva traducción audio"
+            "en": "Biblical Audio",
+            "fr": "Audio Biblique",
+            "es": "Audio Bíblico"
         },
         "create_content_audio_translation": {
-            "en": "Audio Bible",
-            "fr": "Bible audio",
-            "es": "Biblia audio"
+            "en": "Biblical Audio",
+            "fr": "Audio Biblique",
+            "es": "Audio Bíblico"
         },
         "content_section": {
             "en": "Content",
