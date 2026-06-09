@@ -50,7 +50,7 @@ export default function ContentDocument({
             i18nRef.current,
           )}
         </FormLabel>
-        <RadioGroup
+        {/* <RadioGroup
           row
           aria-labelledby="book-create-options"
           name="book-create-options-radio-group"
@@ -66,7 +66,7 @@ export default function ContentDocument({
               i18nRef.current,
             )}
           />
-        </RadioGroup>
+        </RadioGroup> */}
       </FormControl>
       {contentOption === "plan" && (
         <>

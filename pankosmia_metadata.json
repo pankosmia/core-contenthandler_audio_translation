@@ -2,19 +2,109 @@
     "id": "core-contenthandler_audio_translation",
     "exclude_from_menu": true,
     "exclude_from_dashboard": true,
-    "minServerVersion": "0.16.1",
+    "minServerVersion": "0.16.2",
     "require": {
         "net": false,
         "debug": false
     },
     "endpoints": {
         "audioTranslation": {
-            "create_document": {
-                "doc": "Create document for audio translation project",
-                "placeHolders": {},
-                "label": "pages:core-contenthandler_audio_translation:new_audio_translation",
-                "url": "/createDocument/audioTranslation"
-            }
+            "create_document": [
+                {
+                    "doc": "Create document for audio translation project",
+                    "placeHolders": {},
+                    "label": "pages:core-contenthandler_audio_translation:new_audio_translation",
+                    "url": "/createDocument/audioTranslation"
+                }
+            ]
+        }
+    },
+    "i18n": {
+        "title": {
+            "en": "core-contenthandler_audio_translation"
+        },
+        "summary": {
+            "en": "core-contenthandler_audio_translation"
+        },
+        "stub_content": {
+            "en": "Documents go here",
+            "fr": "Les documents vont ici",
+            "es": "Los documentos van aquí"
+        },
+        "new_audio_translation": {
+            "en": "New Audio Translation",
+            "fr": "Nouvelle traduction audio",
+            "es": "Nueva traducción audio"
+        },
+        "create_content_audio_translation": {
+            "en": "Audio Bible",
+            "fr": "Bible audio",
+            "es": "Biblia audio"
+        },
+        "content_section": {
+            "en": "Content",
+            "fr": "Contenu",
+            "es": "Contenido"
+        },
+        "language": {
+            "en": "Language",
+            "fr": "Langue",
+            "es": "Idioma"
+        },
+        "name_section": {
+            "en": "Name",
+            "fr": "Nom",
+            "es": "Nombre"
+        },
+        "segmentation_label": {
+            "en": "Text Segmentation",
+            "fr": "Segmentation du texte",
+            "es": "Segmentación del texto"
+        },
+        "segmentation_section": {
+            "en": "Section",
+            "fr": "Section",
+            "es": "Sección"
+        },
+        "segmentation_paragraph": {
+            "en": "Paragraph",
+            "fr": "Paragraphe",
+            "es": "Párrafo"
+        },
+        "name": {
+            "en": "Name",
+            "fr": "Nom",
+            "es": "Nombre"
+        },
+        "abbreviation": {
+            "en": "Abbreviation",
+            "fr": "Abréviation",
+            "es": "Abreviatura"
+        },
+        "type": {
+            "en": "Type",
+            "fr": "Type",
+            "es": "Tipo"
+        },
+        "helper_abbreviation": {
+            "en": "Unique short label to identify your document (2-8 letters or numbers, no \" \", no \"_\" at beginning or end)",
+            "fr": "Combinaison unique de caractères pour identifier un document (2-8 lettres ou nombres, pas de \" \", pas de \"_\" au début ou à la fin)",
+            "es": "Etiqueta corta única para identificar su documento (2-8 letras o números, sin \" \", sin \"_\" al principio o al final)"
+        },
+        "close": {
+            "en": "Close",
+            "fr": "Fermer",
+            "es": "Cerrar"
+        },
+        "name_is_taken": {
+            "en": "The name is already taken",
+            "fr": "Ce nom est déjà pris",
+            "es": "El nombre ya está en uso"
+        },
+        "audio_translation_creation_error": {
+            "en": "Error creating the audio translation document",
+            "fr": "Erreur lors de la création du document de traduction audio",
+            "es": "Error al crear el documento de traducción de audio"
         }
     }
 }

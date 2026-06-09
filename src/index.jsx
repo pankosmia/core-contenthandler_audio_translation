@@ -26,10 +26,6 @@ const router = createHashRouter([
     element: <NewAudioTranslationContent />,
   },
   // {
-  //   path: "newBook",
-  //   element: <NewTextTranslationBook />,
-  // },
-  // {
   //   path: "deleteBook",
   //   element: <DeleteTextTranslationBook />,
   // },

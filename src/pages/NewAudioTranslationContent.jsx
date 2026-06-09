@@ -194,83 +194,23 @@ export default function NewAudioTranslationContent() {
         }
         const repoPath =
             response.json?.repo_path ?? `_local_/_local_/${contentAbbr}`;
-        // Build one audio document per book from the plan.
-        // Each segment carries an audioId "CC-PP" (chapter / paragraph index,
-        // zero-padded) so the audio editor stores takes under audio_content/CC-PP/.
+        // We do NOT generate any book here. As with text translation, there is
+        // no content before the first recording. Instead we store the plan in
+        // the repo (stamped with the chosen segmentation) so that books can be
+        // created on demand later from `/newBook` — the audio has no structure
+        // to re-derive the plan from once recorded.
         if (planJson) {
-            // Get distinct bookCode list
-            const bookCodes = Array.from(
-                new Set(planJson.sections.map((s) => s.bookCode)),
+            const storedPlan = { ...planJson, audioSegmentation: segmentation };
+            const storePlanResponse = await postJson(
+                `/api/burrito/ingredient/raw/${repoPath}?ipath=plan.json&update_ingredients`,
+                JSON.stringify({ payload: JSON.stringify(storedPlan, null, 2) }),
             );
-            for (const bookCode of bookCodes) {
-                const bookSections = planJson.sections.filter(
-                    (s) => s.bookCode === bookCode,
+            if (!storePlanResponse.ok) {
+                setErrorMessage(
+                    `${doI18n("pages:core-contenthandler_audio_translation:audio_translation_creation_error", i18nRef.current)}: ${storePlanResponse.status}`,
                 );
-                // chapterNo -> ordered list of verse refs to record
-                const chapterRefs = new Map();
-                const addRef = (chapter, ref) => {
-                    if (!chapterRefs.has(chapter)) {
-                        chapterRefs.set(chapter, []);
-                    }
-                    chapterRefs.get(chapter).push(ref);
-                };
-                for (const bookSection of bookSections) {
-                    if (segmentation === "section") {
-                        // one segment per section, keyed on the section start chapter
-                        const chapter = parseInt(bookSection.cv[0].split(":")[0]);
-                        addRef(chapter, `${bookSection.cv[0]}-${bookSection.cv[1]}`);
-                    } else {
-                        // paragraph: one segment per paragraph unit
-                        for (const para of bookSection.paragraphs) {
-                            if (para.units) {
-                                for (const unit of para.units) {
-                                    const chapter = parseInt(unit.split(":")[0]);
-                                    addRef(chapter, unit);
-                                }
-                            } else if (para.cv) {
-                                // bridge
-                                const chapter = parseInt(
-                                    String(para.cv[0]).split(":")[0],
-                                );
-                                addRef(chapter, `${para.cv[0]}-${para.cv[1]}`);
-                            }
-                        }
-                    }
-                }
-                const chapters = Array.from(chapterRefs.keys())
-                    .sort((a, b) => a - b)
-                    .map((chapter) => {
-                        const cc = String(chapter).padStart(2, "0");
-                        const segments = chapterRefs.get(chapter).map((ref, idx) => ({
-                            paragraph: idx,
-                            ref,
-                            audioId: `${cc}-${String(idx).padStart(2, "0")}`,
-                        }));
-                        return { chapter, segments };
-                    });
-                const bookDoc = {
-                    bookCode,
-                    segmentation,
-                    short_name: planJson.short_name,
-                    version: planJson.version,
-                    copyright: planJson.copyright,
-                    chapters,
-                };
-                const payload = {
-                    payload: JSON.stringify(bookDoc, null, 2),
-                };
-                const newBookResponse = await postJson(
-                    `/api/burrito/ingredient/raw/_local_/_local_/${contentAbbr}?ipath=${bookCode}.json&update_ingredients`,
-                    JSON.stringify(payload),
-                );
-                if (!newBookResponse.ok) {
-                    setErrorMessage(
-                        `${doI18n("pages:core-contenthandler_text_translation:book_creation_error", i18nRef.current)}: ${response.status
-                        }`,
-                    );
-                    setErrorDialogOpen(true);
-                    return;
-                }
+                setErrorDialogOpen(true);
+                return;
             }
         }
         await handleClose();
