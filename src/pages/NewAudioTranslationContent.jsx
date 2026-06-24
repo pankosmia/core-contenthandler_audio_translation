@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { Box, DialogContent } from "@mui/material";
-import { postJson, doI18n, getAndSetJson, getJson } from "pithekos-lib";
+import { postJson,getAndSetJson, getJson } from "pankosmia-lib/http";
+import { doI18n } from "pankosmia-lib/i18n";
 import {
     PanDialog,
     i18nContext,
@@ -13,9 +14,6 @@ import ContentDocument from "../AudioTranslationContent/ContentDocument";
 import LanguagePicker from "../AudioTranslationContent/LanguagePicker";
 import NameDocument from "../AudioTranslationContent/NameDocument";
 import ErrorDialog from "../AudioTranslationContent/ErrorDialog";
-
-
-
 
 export default function NewAudioTranslationContent() {
     const { i18nRef } = useContext(i18nContext);
@@ -215,8 +213,6 @@ export default function NewAudioTranslationContent() {
         }
         await handleClose();
     };
-
-
 
     return (
         <Box>
