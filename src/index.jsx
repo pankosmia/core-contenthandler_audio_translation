@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { getAndSetJson } from "pankosmia-lib/http";
 import { createTheme, styled } from "@mui/material";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
+import { MuncherTest } from "./pages/MuncherTest";
 
 const router = createHashRouter([
   {
@@ -19,6 +20,10 @@ const router = createHashRouter([
     path: "/createDocument/audioTranslation",
     element: <NewAudioTranslationContent />,
   },
+  {
+    path:"MuncherTest",
+    element:<MuncherTest />
+  }
 ]);
 function AppLayout() {
   const [themeSpec, setThemeSpec] = useState(fallbackTheme);
