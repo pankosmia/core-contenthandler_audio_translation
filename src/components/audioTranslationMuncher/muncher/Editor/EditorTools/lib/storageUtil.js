@@ -41,7 +41,11 @@ export async function saveProject(paths, state) {
     "file",
     new Blob([JSON.stringify(state)], { type: "application/json" }),
   );
-  await fetch(paths.bytesUrl(paths.project), { method: "POST", body: fd });
+  const r = await fetch(paths.bytesUrl(paths.project), { method: "POST", body: fd });
+  if (!r.ok) {
+    const body = await r.clone().text().catch(() => "");
+    throw new Error(`saveProject: HTTP ${r.status} - ${body}`);
+  }
 }
 
 export async function saveAudioBlob(paths, id, blob) {

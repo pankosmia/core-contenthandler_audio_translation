@@ -3,12 +3,14 @@ import {
   currentProjectContext,
   debugContext,
   i18nContext,
+  bcvContext,
 } from "pankosmia-rcl";
 import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
 import { WrapperNav } from "../components/audioTranslationMuncher/wrapperMuncher/WrapperNav";
 import { Padding } from "@mui/icons-material";
-import AudioTranslationMuncher from "../components/audioTranslationMuncher/muncher/Editor/AudioTranslationEditorMuncher";
+import AudioTranslationEditorMuncher from "../components/audioTranslationMuncher/muncher/Editor/AudioTranslationEditorMuncher";
+import AudioTranslationViewerMuncher from "../components/audioTranslationMuncher/muncher/Viewer/AudioTranslationViewerMuncher";
 
 export function MuncherTest() {
   const { currentProjectRef } = useContext(currentProjectContext);
@@ -16,7 +18,7 @@ export function MuncherTest() {
   const { i18nRef } = useContext(i18nContext);
   const [currentBurrito, setCurrentBurrito] = useState(null);
   const [modified, setModified] = useState(false);
-
+  const { systemBcv } = useContext(bcvContext);
   useEffect(() => {
     async function getSummary() {
       if (currentProjectRef.current) {
@@ -65,7 +67,17 @@ export function MuncherTest() {
       >
         {metadata && (
           <Box sx={{ flex: 1, margin: 2 }}>
-            <AudioTranslationMuncher
+            <AudioTranslationViewerMuncher
+              metadata={metadata}
+              debugRef={debugRef}
+              i18nRef={i18nRef}
+              systemBcv={systemBcv}
+            />
+          </Box>
+        )}
+        {metadata && (
+          <Box sx={{ flex: 1, margin: 2 }}>
+            <AudioTranslationEditorMuncher
               metadata={metadata}
               debugRef={debugRef}
               i18nRef={i18nRef}

@@ -1,6 +1,6 @@
 {
   "name": "core-contenthandler_audio_translation",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "private": true,
   "homepage": "/clients/core-contenthandler_audio_translation",
   "packageManager": "pnpm@11.20.0",

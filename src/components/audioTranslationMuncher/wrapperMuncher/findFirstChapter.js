@@ -82,6 +82,7 @@ export async function getFirstChapterBCVNotes(
   }
 }
 
+
 export function getFirstChapter(flavor) {
   switch (flavor) {
     case "x-juxtalinear":

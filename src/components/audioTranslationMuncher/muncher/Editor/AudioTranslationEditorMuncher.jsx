@@ -81,7 +81,6 @@ function deriveChapters(plan, bookCode, segmentation) {
 
 function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
   const theme = useTheme();
-
   const [ffmpegModalOpen, setFfmpegModalOpen] = useState(false);
   const [plan, setPlan] = useState(null);
   const [selectedBook, setSelectedBook] = useState("");
@@ -99,11 +98,24 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
         const r = await fetch(
           `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=plan.json`,
         );
-        if (!r.ok) return;
+
+        if (r.status === 404 || r.status === 400) {
+          if (!cancelled) setPlan(null);
+          return;
+        }
+
+        if (!r.ok) {
+          const body = await r.clone().text().catch(() => "");
+          throw new Error(`HTTP ${r.status} - ${body}`);
+        }
+
         const doc = await r.json();
         if (!cancelled) setPlan(doc);
-      } catch {
-        /* server unreachable / no plan: leave it empty */
+      } catch (err) {
+        if (!cancelled) {
+          console.error("Erreur de chargement de plan.json:", err);
+          setPlanError(err.message ?? String(err));
+        }
       }
     })();
     return () => {
@@ -319,16 +331,19 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
 
       <Box sx={{ padding: 2 }}>
         {current ? (
-          <AudioRecorder
-            key={segmentKey}
-            audioUrl=""
-            metadata={metadata}
-            obs={obs}
-            book={selectedBook}
-            // Nom de la piste principale d'un nouveau segment : code livre +
-            // référence chapitre:verset, ex. "MRK 1:3".
-            mainTrackName={`${selectedBook} ${current.ref}`}
-          />
+          <>
+            <AudioRecorder
+              key={segmentKey}
+              audioUrl=""
+              metadata={metadata}
+              obs={obs}
+              book={selectedBook}
+              // Nom de la piste principale d'un nouveau segment : code livre +
+              // référence chapitre:verset, ex. "MRK 1:3".
+              mainTrackName={`${selectedBook} ${current.ref}`}
+            />
+          </>
+
         ) : (
           <Typography sx={{ color: "text.secondary", padding: 2 }}>
             {doI18n(

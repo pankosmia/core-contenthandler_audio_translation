@@ -1,6 +1,6 @@
 {
   "name": "core-contenthandler_audio_translation",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "private": false,
   "homepage": "https://github.com/pankosmia/core-audio_translation",
   "main": "munchersPackageExport/audioTranslation-muncher-rcl.umd.js",
