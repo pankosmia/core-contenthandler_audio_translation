@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Typography,
@@ -327,6 +327,7 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
           nextBookDisabled: bookIndex < 0 || bookIndex >= books.length - 1,
         }}
         i18nRef={i18nRef}
+        debugRef={debugRef}
       />
 
       <Box sx={{ padding: 2 }}>

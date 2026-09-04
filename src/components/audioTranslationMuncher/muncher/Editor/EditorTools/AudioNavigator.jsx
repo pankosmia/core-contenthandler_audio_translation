@@ -11,7 +11,6 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useContext } from "react";
 import { doI18n } from "pankosmia-lib/i18n";
 
 // Collapse a "C:V-C:V" reference to "C:V-V" when both ends share a chapter

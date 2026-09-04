@@ -40,13 +40,13 @@ export async function getFirstChapterJuxta(
     );
     if (!responsePost.ok) {
       enqueueSnackbar(
-        `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${responsePost.status}`,
+        `${doI18n("pages:core-contenthandler_audio_translation:error", i18nRef.current)}: ${responsePost.status}`,
         { variant: "error" },
       );
     }
   } else {
     enqueueSnackbar(
-      `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
+      `${doI18n("pages:core-contenthandler_audio_translation:error", i18nRef.current)}: ${response.status}`,
       { variant: "error" },
     );
   }

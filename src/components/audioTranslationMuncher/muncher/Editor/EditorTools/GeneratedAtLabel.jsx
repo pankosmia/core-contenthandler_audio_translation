@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Typography } from "@mui/material";
 import { doI18n } from "pankosmia-lib/i18n";
 import {
@@ -9,9 +8,7 @@ import {
 // Shows when the audio was last generated, next to the "generate audio" button.
 // Never generated: "Audio never generated". Recent (same day): "Generated at:
 // 4:35 PM". Older: "Jun 22, 4:35 PM".
-function GeneratedAtLabel({ date }) {
-  const { i18nRef } = useContext(I18nContext);
-  const { debugRef } = useContext(DebugContext);
+function GeneratedAtLabel({ date, i18nRef, debugRef }) {
 
   const d = date ? (date instanceof Date ? date : new Date(date)) : null;
   const hasDate = d && !isNaN(d.getTime());

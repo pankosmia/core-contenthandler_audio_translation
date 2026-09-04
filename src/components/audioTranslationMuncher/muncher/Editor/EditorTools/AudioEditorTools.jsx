@@ -1,12 +1,7 @@
 import { Box, Grid, IconButton, Tooltip } from "@mui/material";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { doI18n } from "pankosmia-lib/i18n";
-import {
-  i18nContext as I18nContext,
-  debugContext as DebugContext,
-} from "pankosmia-rcl";
 
 import LayoutIcon from "./layouts/LayoutIcon";
 import AudioCompileIcon from "./AudioCompileIcon";
@@ -16,9 +11,7 @@ import AudioNavigator from "./AudioNavigator";
 // Top toolbar for the audio translation editor, modelled on OBSEditorTools /
 // TextTranslation EditorTools: a fixed bar with the navigator centred and the
 // layout-edit button on the right.
-function AudioEditorTools({ nav, compileAudio, generatedAt }) {
-  const { i18nRef } = useContext(I18nContext);
-  const { debugRef } = useContext(DebugContext);
+function AudioEditorTools({ nav, compileAudio, generatedAt, i18nRef, debugRef }) {
   const navigate = useNavigate();
 
   const compileAudioHandler = async () => {
@@ -78,7 +71,7 @@ function AudioEditorTools({ nav, compileAudio, generatedAt }) {
               </IconButton>
             </span>
           </Tooltip>
-          <GeneratedAtLabel date={generatedAt} />
+          <GeneratedAtLabel date={generatedAt} i18nRef={i18nRef} debugRef={debugRef} />
         </Grid>
 
         <Grid sx={{ display: "flex", alignItems: "center", flex: 1 }} gap={1}>

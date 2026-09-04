@@ -1,5 +1,5 @@
 {
-  "name": "core-contenthandler_audio_translation",
+  "name": "pankosmia-audio_translation-muncher",
   "version": "0.1.0",
   "private": false,
   "homepage": "https://github.com/pankosmia/core-audio_translation",
@@ -20,9 +20,7 @@
     "globals": "^17.6.0",
     "js-yaml": "^4.1.1",
     "jszip": "^3.10.1",
-    "notistack": "^3.0.2",
     "pankosmia-lib": "^0.0.3",
-    "pankosmia-rcl": "0.7.1",
     "prop-types": "^15.8.1",
     "proskomma-core": "^0.11.2",
     "proskomma-json-tools": "^0.9.1",
@@ -40,7 +38,9 @@
   },
   "peerDependencies": {
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "pankosmia-rcl": "0.7.1",
+    "notistack": "^3.0.2"
   },
   "scripts": {
     "start": "vite",

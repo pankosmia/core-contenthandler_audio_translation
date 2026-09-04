@@ -31,7 +31,7 @@ export function MuncherTest() {
           setCurrentBurrito([projectPath, entry]);
         } else {
           enqueueSnackbar(
-            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
+            `${doI18n("pages:core-contenthandler_audio_translation:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
             { variant: "error" },
           );
         }
@@ -81,6 +81,7 @@ export function MuncherTest() {
               metadata={metadata}
               debugRef={debugRef}
               i18nRef={i18nRef}
+              currentBurrito={currentBurrito}
             />
           </Box>
         )}
