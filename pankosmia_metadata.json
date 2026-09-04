@@ -105,6 +105,11 @@
             "en": "Error creating the audio translation document",
             "fr": "Erreur lors de la création du document de traduction audio",
             "es": "Error al crear el documento de traducción de audio"
-        }
+        },
+         "error": {
+      "en": "Error happened :",
+      "fr": "Une erreur est survenue: ",
+      "es": "Ocurrió un error: "
+    }
     }
 }

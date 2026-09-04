@@ -1,13 +1,13 @@
 {
-  "name": "core-contenthandler_audio_translation",
+  "name": "pankosmia-audio_translation-muncher",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "/clients/core-contenthandler_audio_translation",
-  "packageManager": "pnpm@11.20.0",
-  "engines": {
-    "node": ">=24",
-    "pnpm": "11.20.0"
-  },
+  "private": false,
+  "homepage": "https://github.com/pankosmia/core-audio_translation",
+  "main": "munchersPackageExport/audioTranslation-muncher-rcl.umd.js",
+  "module": "munchersPackageExport/audioTranslation-muncher-rcl.es.js",
+  "files": [
+    "munchersPackageExport"
+  ],
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -18,12 +18,9 @@
     "file-saver": "^2.0.5",
     "font-detect-rhl": "^1.1.8",
     "globals": "^17.6.0",
-    "interactjs": "^1.10.28",
     "js-yaml": "^4.1.1",
     "jszip": "^3.10.1",
-    "notistack": "^3.0.2",
     "pankosmia-lib": "^0.0.3",
-    "pankosmia-rcl": "0.7.1",
     "prop-types": "^15.8.1",
     "proskomma-core": "^0.11.2",
     "proskomma-json-tools": "^0.9.1",
@@ -47,7 +44,6 @@
     "react-router-dom": "^7.9.4"
   },
   "scripts": {
-    "publish": "pnpm run build:package  && cd ./src/components/audioTranslationMuncher && npm publish ",
     "build": "vite build",
     "build:package": "vite build --mode isMuncher",
     "dev": "vite",
