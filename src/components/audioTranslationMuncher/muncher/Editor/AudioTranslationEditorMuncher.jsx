@@ -8,8 +8,6 @@ import {
 } from "@mui/material";
 
 import {
-  i18nContext as I18nContext,
-  debugContext as DebugContext,
   PanDialog,
   PanDialogActions,
 } from "pankosmia-rcl";
