@@ -43,9 +43,8 @@
     "notistack": "^3.0.2"
   },
   "scripts": {
-    "start": "vite",
     "build": "vite build",
-    "build:vite": "vite build",
+    "build:package": "vite build --mode isMuncher",
     "dev": "vite",
     "prepare": "husky"
   },
@@ -66,9 +65,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-darwin-x64": "^4.60.4",
-    "@rollup/rollup-win32-x64-msvc": "^4.60.4"
   }
 }
