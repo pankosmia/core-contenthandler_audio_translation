@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { Box, DialogContent } from "@mui/material";
-import { postJson,getAndSetJson, getJson } from "pankosmia-lib/http";
+import { postJson, getAndSetJson, getJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import {
     PanDialog,
@@ -43,7 +43,27 @@ export default function NewAudioTranslationContent() {
     const debugRef = useRef(debugContext);
     const [errorMessage, setErrorMessage] = useState("");
     const [errorDialogOpen, setErrorDialogOpen] = useState(false);
-
+    const [copyright, setCopyright] = useState({
+        author_name: "",
+        year: "",
+    });
+    const [optionCopyright, setOptionCopyright] = useState("unspecified");
+    function fullCopyright(optionCopyright) {
+        switch (optionCopyright) {
+            case "public-domain":
+                return doI18n(
+                    "pages:core-contenthandler_audio_translation:public_domain",
+                    i18nRef.current,
+                );
+            case "all_rights_reserved":
+                return `${copyright.author_name} ${copyright.year}`;
+            default:
+                return doI18n(
+                    "pages:core-contenthandler_audio_translation:unspecified_copyright",
+                    i18nRef.current,
+                );
+        }
+    }
     const steps = [
         `${doI18n("pages:core-contenthandler_audio_translation:content_section", i18nRef.current)}`,
         `${doI18n("pages:core-contenthandler_audio_translation:language", i18nRef.current)}`,
@@ -68,6 +88,10 @@ export default function NewAudioTranslationContent() {
                         errorAbbreviation={errorAbbreviation}
                         setErrorAbbreviation={setErrorAbbreviation}
                         localRepos={localRepos}
+                        copyright={copyright}
+                        setCopyright={setCopyright}
+                        optionCopyright={optionCopyright}
+                        setOptionCopyright={setOptionCopyright}
                     />
                 );
             case 1:
@@ -175,6 +199,7 @@ export default function NewAudioTranslationContent() {
             content_language_code: currentLanguage.language_code,
             content_language_name: currentLanguage.language_name,
             versification: submittedVersification,
+            copyright: fullCopyright(optionCopyright),
         };
 
         const response = await postJson(
@@ -259,11 +284,11 @@ export default function NewAudioTranslationContent() {
             </PanDialog>
             {/* Error Dialog */}
             <ErrorDialog
-            setErrorDialogOpen={setErrorDialogOpen}
-            handleClose={handleClose}
-            errorDialogOpen={errorDialogOpen}
-            errorMessage={errorMessage}
-          />
+                setErrorDialogOpen={setErrorDialogOpen}
+                handleClose={handleClose}
+                errorDialogOpen={errorDialogOpen}
+                errorMessage={errorMessage}
+            />
         </Box>
     );
 }
