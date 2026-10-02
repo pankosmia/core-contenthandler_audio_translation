@@ -200,6 +200,7 @@ export default function NewAudioTranslationContent() {
             content_language_name: currentLanguage.language_name,
             versification: submittedVersification,
             copyright: fullCopyright(optionCopyright),
+            books:["MAT","LUK"]
         };
 
         const response = await postJson(
