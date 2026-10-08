@@ -184,7 +184,7 @@ export default function NewAudioTranslationContent() {
                 submittedVersification = planJson.versification;
             } else {
                 setErrorMessage(
-                    `${doI18n("pages:core-contenthandler_text_translation:content_creation_error", i18nRef.current)}: ${planResponse.status}`,
+                    `${doI18n("pages:core-contenthandler_audio_translation:content_creation_error", i18nRef.current)}: ${planResponse.status}`,
                 );
                 setErrorDialogOpen(true);
                 return;
