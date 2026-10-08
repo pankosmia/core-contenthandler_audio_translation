@@ -123,6 +123,26 @@
     "unspecified_copyright": {
       "en": "Unspecified",
       "fr": "Non spécifié"
+    },
+    "helper_template":{
+      "en":"Start with a predefined translation plan",
+      "fr":"Commencer avec un plan de traduction prédéfini"
+    },
+    "select_plan":{
+      "en":"Select",
+      "fr":"Sélectionner"
+    },
+    "helper_text":{
+      "en":"Translation plans can be imported, downloaded or created.",
+      "fr":"Les plans de traduction peuvent être importés, téléchargés ou créés."
+    },
+    "add_content": {
+      "en": "Initial document structure",
+      "fr": "Structure initiale du document"
+    },
+    "no_translation_plans": {
+      "en": "No translation plan yet",
+      "fr": "Pas encore de plan de traduction"
     }
   }
 }
