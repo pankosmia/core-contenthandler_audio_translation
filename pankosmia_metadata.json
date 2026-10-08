@@ -139,6 +139,10 @@
     "add_content": {
       "en": "Initial document structure",
       "fr": "Structure initiale du document"
+    },
+    "no_translation_plans": {
+      "en": "No translation plan yet",
+      "fr": "Pas encore de plan de traduction"
     }
   }
 }

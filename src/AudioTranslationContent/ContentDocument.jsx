@@ -10,12 +10,13 @@ import {
   Radio,
   Typography,
   TextField,
+
 } from "@mui/material";
 import { getAndSetJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import sx from "../pages/Selection.styles";
 import ListMenuItem from "../pages/ListMenuItem";
-import { i18nContext } from "pankosmia-rcl";
+import { i18nContext, SectionDialogTitle } from "pankosmia-rcl";
 
 export default function ContentDocument({
   open,
@@ -46,12 +47,16 @@ export default function ContentDocument({
     <>
       {contentOption === "plan" && (
         <>
-          <Typography> {doI18n(
+          <SectionDialogTitle titleSection={doI18n(
             "pages:core-contenthandler_audio_translation:add_content",
+            i18nRef.current,
+          )} />
+          <Typography> {doI18n(
+            "pages:core-contenthandler_audio_translation:helper_template",
             i18nRef.current,
           )}</Typography>
           <TextField
-            disabled={planResources.length === 0}
+            required
             label={doI18n(
               "pages:core-contenthandler_audio_translation:select_plan",
               i18nRef.current,
@@ -70,22 +75,27 @@ export default function ContentDocument({
             value={selectedPlan || ""}
 
           >
-            {Object.entries(metadataSummaries)
-              .filter((r) => r[1].flavor === "x-translationplan")
-              .map((r) => (
-                <MenuItem key={r[0]} value={r[0]} dense>
-                  <ListMenuItem listItem={r[1].name} />
-                </MenuItem>
-              ))}
+            {planResources.length > 0 && Object.entries(metadataSummaries) ? (
+              Object.entries(metadataSummaries)
+                .filter((r) => r[1].flavor === "x-translationplan")
+                .map((r) => (
+                  <MenuItem key={r[0]} value={r[0]} dense>
+                    <ListMenuItem listItem={r[1].name} />
+                  </MenuItem>
+                ))
+            ) : <Typography sx={{ paddingLeft: 2 }}>
+              {doI18n(
+                "pages:core-contenthandler_audio_translation:no_translation_plans",
+                i18nRef.current,
+              )}
+            </Typography>}
           </TextField>
           {selectedPlan && (
             <FormControl sx={{ paddingTop: 1 }}>
-              <FormLabel id="audio-segmentation-options">
-                {doI18n(
-                  "pages:core-contenthandler_audio_translation:segmentation_label",
-                  i18nRef.current,
-                )}
-              </FormLabel>
+              <SectionDialogTitle titleSection={doI18n(
+                "pages:core-contenthandler_audio_translation:segmentation_label",
+                i18nRef.current,
+              )} />
               <RadioGroup
                 row
                 aria-labelledby="audio-segmentation-options"
