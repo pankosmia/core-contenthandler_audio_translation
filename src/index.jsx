@@ -3,7 +3,6 @@ import { SpaContainer,fallbackTheme } from "pankosmia-rcl";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import NewAudioTranslationContent from "./pages/NewAudioTranslationContent";
-import App from "./App";
 import { styled } from "@mui/material";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
 import { MuncherTest } from "./pages/MuncherTest";
@@ -11,15 +10,11 @@ import { MuncherTest } from "./pages/MuncherTest";
 const router = createHashRouter([
   {
     path: "/",
-    element: <App />,
+    element: <MuncherTest />,
   },
   {
     path: "/createDocument/audioTranslation",
     element: <NewAudioTranslationContent />,
-  },
-  {
-    path:"MuncherTest",
-    element:<MuncherTest />
   }
 ]);
 function AppLayout() {

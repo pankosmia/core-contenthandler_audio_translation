@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import {
   currentProjectContext,
   debugContext,
@@ -73,6 +73,7 @@ export function MuncherTest() {
               i18nRef={i18nRef}
               systemBcv={systemBcv}
             />
+        <Divider sx={{ display: "block", marginY: 2 }} />
           </Box>
         )}
         {metadata && (
