@@ -73,7 +73,6 @@ export function MuncherTest() {
               i18nRef={i18nRef}
               systemBcv={systemBcv}
             />
-        <Divider sx={{ display: "block", marginY: 2 }} />
           </Box>
         )}
         {metadata && (
