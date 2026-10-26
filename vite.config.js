@@ -22,38 +22,49 @@ export default defineConfig(({ mode }) => {
     },
     build: isMuncher
       ? {
-        outDir: "src/components/audioTranslationMuncher/munchersPackageExport",
-        emptyOutDir: true,
-        sourcemap: true,
+          outDir:
+            "src/components/audioTranslationMuncher/munchersPackageExport",
+          emptyOutDir: true,
+          sourcemap: true,
 
-        rollupOptions: {
-          external: ["react", "react-dom", "react-router-dom", "notistack", "pankosmia-rcl"],
-          output: {
-            name: "audioTranslationMunchersRcl",
-            globals: {
-              react: "React",
-              "react-dom": "ReactDOM",
-              "react-router-dom": "ReactRouterDOM",
-              notistack: "notistack",
-              "pankosmia-rcl": "pankosmiaRcl",
+          rollupOptions: {
+            external: [
+              "react",
+              "react-dom",
+              "react-router-dom",
+              "notistack",
+              "pankosmia-rcl",
+
+              /^@mui\//,
+              /^@emotion\//,
+            ],
+
+            output: {
+              name: "audioTranslationMunchersRcl",
+              globals: {
+                react: "React",
+                "react-dom": "ReactDOM",
+                "react-router-dom": "ReactRouterDOM",
+                notistack: "notistack",
+                "pankosmia-rcl": "pankosmiaRcl",
+              },
             },
           },
-        },
 
-        lib: {
-          entry: path.resolve(
-            __dirname,
-            "./src/components/audioTranslationMuncher/muncher/index.js",
-          ),
-          name: "pankosmiaRcl",
-          fileName: (format) => `audioTranslation-muncher-rcl.${format}.js`,
-        },
-      }
+          lib: {
+            entry: path.resolve(
+              __dirname,
+              "./src/components/audioTranslationMuncher/muncher/index.js",
+            ),
+            name: "pankosmiaRcl",
+            fileName: (format) => `audioTranslation-muncher-rcl.${format}.js`,
+          },
+        }
       : {
-        outDir: "build",
-        emptyOutDir: true,
-        sourcemap: true,
-      },
+          outDir: "build",
+          emptyOutDir: true,
+          sourcemap: true,
+        },
     base: "/clients/core-contenthandler_audio_translation",
   };
 });

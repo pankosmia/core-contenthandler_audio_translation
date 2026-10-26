@@ -24,7 +24,6 @@ export default function AudioTranslationViewerMuncher({ metadata, systemBcv, deb
   const paddedChapter = overPaddedChapter.substring(
     overPaddedChapter.length - 3,
   );
-  console.log("paddedChapter", paddedChapter);
 
   return (
     <Box>

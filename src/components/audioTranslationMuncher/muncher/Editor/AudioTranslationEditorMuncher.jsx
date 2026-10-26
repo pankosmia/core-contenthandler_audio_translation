@@ -288,7 +288,6 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
         titleLabel="FFmpeg not installed"
         isOpen={ffmpegModalOpen}
         closeFn={() => setFfmpegModalOpen(false)}
-        theme={theme}
         size="sm"
       >
         <DialogContent>
