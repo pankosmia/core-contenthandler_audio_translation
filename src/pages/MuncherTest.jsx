@@ -58,7 +58,7 @@ export function MuncherTest() {
     >
       <Box>
         <Header
-          titleKey={"pages:core-contenthandler-audio_translation:titleMuncherTest"}
+          titleKey={"pages:core-contenthandler_audio_translation:titleMuncherTest"}
           currentId="content"
           requireNet={false}
         />
