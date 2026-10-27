@@ -1,8 +1,6 @@
 {
   "id": "core-contenthandler_audio_translation",
-  "exclude_from_menu": true,
-  "exclude_from_dashboard": true,
-  "minServerVersion": "0.18.15",
+  "minServerVersion": "0.20.3",
   "require": {
     "net": false,
     "debug": false
@@ -35,6 +33,9 @@
       "en": "Documents go here",
       "fr": "Les documents vont ici",
       "es": "Los documentos van aquí"
+    },
+    "titleMuncherTest":{
+      "en": "Flavor audioTranslation"
     },
     "new_audio_translation": {
       "en": "Biblical Audio",
