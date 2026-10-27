@@ -4,6 +4,7 @@ import {
   debugContext,
   i18nContext,
   bcvContext,
+  Header
 } from "pankosmia-rcl";
 import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
@@ -51,20 +52,22 @@ export function MuncherTest() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        margin: 3,
-        height: "98vh",
+        height: "100%",
+        overflow: "hidden",
       }}
     >
-      <WrapperNav flavor={"audioTranslation"} />
+      <Box>
+        <Header
+          titleKey={"pages:core-contenthandler_audio_translation:titleMuncherTest"}
+          currentId="content"
+          requireNet={false}
+        />
+      </Box>
+      <Box sx={{ paddingLeft: 2, paddingTop: 10, flexShrink: 0 }}>
+        <WrapperNav flavor={"audioTranslation"} />
+      </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          width: "100%",
-          overflowY: "scroll",
-          paddingTop: 5,
-        }}
-      >
+      <Box sx={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column" }}>
         {metadata && (
           <Box sx={{ flex: 1, margin: 2 }}>
             <AudioTranslationViewerMuncher

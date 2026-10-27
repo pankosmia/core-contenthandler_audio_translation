@@ -11,7 +11,7 @@ import {
   PanDialog,
   PanDialogActions,
 } from "pankosmia-rcl";
-import { postEmptyJson } from "pankosmia-lib/http";
+import { postEmpty } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 
 import AudioRecorder from "./EditorTools/AudioRecorder";
@@ -171,7 +171,7 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
     const endPart = current.ref.split("-")[1];
     const endVerseWithoutChapter = endPart?.split(":")?.[1];
     const endVerse = endVerseWithoutChapter ? endVerseWithoutChapter : endPart;
-    postEmptyJson(
+    postEmpty(
       `/api/navigation/bcv/${selectedBook}/${chap}/${verse}${endVerse ? `/${endVerse}` : ""}`,
       debugRef.current,
     );
