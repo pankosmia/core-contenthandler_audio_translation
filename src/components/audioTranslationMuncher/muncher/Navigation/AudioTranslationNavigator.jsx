@@ -26,28 +26,28 @@ function formatRef(ref) {
 
 // Single navigation control for the audio translation editor, modelled on
 // OBSNavigator: double arrows jump book, single arrows move one segment.
-// Two dropdowns inside allow manual book / segment selection. Prop-driven.
-function AudioNavigator({
-  book,
-  books,
-  segmentation,
-  onSelectBook,
-  segIndex,
-  flatSegments,
-  onSelectSegment,
-  onPrevBook,
-  onPrevSegment,
-  onNextSegment,
-  onNextBook,
-  prevBookDisabled,
-  prevSegmentDisabled,
-  nextSegmentDisabled,
-  nextBookDisabled,
-  i18nRef,
-}) {
+// Two dropdowns inside allow manual book / segment selection. Everything
+// comes from props so this can live outside the editor tree.
+function AudioTranslationNavigator({ navigation, i18nRef }) {
+  if (!navigation || !i18nRef?.current) return null;
 
-  // The segment dropdown is labelled by the plan's granularity: a section-based
-  // plan reads "Section", anything else reads "Chapter".
+  const {
+    book,
+    books,
+    segmentation,
+    onSelectBook,
+    segIndex,
+    flatSegments,
+    onSelectSegment,
+    onPrevBook,
+    onPrevSegment,
+    onNextSegment,
+    onNextBook,
+    prevBookDisabled,
+    prevSegmentDisabled,
+    nextSegmentDisabled,
+    nextBookDisabled,
+  } = navigation;
   const segmentLabel = doI18n(
     segmentation === "section"
       ? "pages:core-local-workspace:section"
@@ -55,8 +55,6 @@ function AudioNavigator({
     i18nRef.current,
   );
 
-  // Segment menu items, grouped by start chapter for orientation. The MenuItem
-  // value is the index into flatSegments so selection maps straight to segIndex.
   const segmentItems = [];
   let lastChapter = null;
   flatSegments.forEach((s, idx) => {
@@ -72,7 +70,12 @@ function AudioNavigator({
 
   return (
     <Box
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "white",
+      }}
     >
       <ButtonGroup>
         <IconButton disabled={prevBookDisabled} onClick={onPrevBook}>
@@ -132,4 +135,4 @@ function AudioNavigator({
   );
 }
 
-export default AudioNavigator;
+export default AudioTranslationNavigator;

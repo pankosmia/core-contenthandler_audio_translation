@@ -6,12 +6,18 @@ import { doI18n } from "pankosmia-lib/i18n";
 import LayoutIcon from "./layouts/LayoutIcon";
 import AudioCompileIcon from "./AudioCompileIcon";
 import GeneratedAtLabel from "./GeneratedAtLabel";
-import AudioNavigator from "./AudioNavigator";
+import AudioTranslationNavigator from "../../Navigation/AudioTranslationNavigator";
 
 // Top toolbar for the audio translation editor, modelled on OBSEditorTools /
 // TextTranslation EditorTools: a fixed bar with the navigator centred and the
 // layout-edit button on the right.
-function AudioEditorTools({ nav, compileAudio, generatedAt, i18nRef, debugRef }) {
+function AudioEditorTools({
+  compileAudio,
+  generatedAt,
+  i18nRef,
+  debugRef,
+  navigation,
+}) {
   const navigate = useNavigate();
 
   const compileAudioHandler = async () => {
@@ -75,7 +81,7 @@ function AudioEditorTools({ nav, compileAudio, generatedAt, i18nRef, debugRef })
         </Grid>
 
         <Grid sx={{ display: "flex", alignItems: "center", flex: 1 }} gap={1}>
-          <AudioNavigator {...nav} i18nRef={i18nRef}  />
+          <AudioTranslationNavigator navigation={navigation} i18nRef={i18nRef} />
         </Grid>
 
         <Grid
