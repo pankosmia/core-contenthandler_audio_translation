@@ -6,6 +6,7 @@ import NewAudioTranslationContent from "./pages/NewAudioTranslationContent";
 import { styled } from "@mui/material";
 import { SnackbarProvider, MaterialDesignContent } from "notistack";
 import { MuncherTest } from "./pages/MuncherTest";
+import { AudioTranslationProvider } from "./components/audioTranslationMuncher/muncher/Navigation/AudioTranslationContext";
 
 const router = createHashRouter([
   {
@@ -38,6 +39,7 @@ function AppLayout() {
     },
   }));
   return (
+    <AudioTranslationProvider>
       <SnackbarProvider
         Components={{
           error: CustomSnackbarContent,
@@ -51,6 +53,7 @@ function AppLayout() {
           <RouterProvider router={router} />
         </SpaContainer>
       </SnackbarProvider>
+    </AudioTranslationProvider>
   );
 }
 createRoot(document.getElementById("root")).render(<AppLayout />);

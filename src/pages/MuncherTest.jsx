@@ -4,21 +4,25 @@ import {
   debugContext,
   i18nContext,
   bcvContext,
-  Header
+  Header,
+  AdvancedAppBar,
 } from "pankosmia-rcl";
 import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
+import { doI18n } from "pankosmia-lib/i18n";
+import { enqueueSnackbar } from "notistack";
 import { WrapperNav } from "../components/audioTranslationMuncher/wrapperMuncher/WrapperNav";
-import { Padding } from "@mui/icons-material";
 import AudioTranslationEditorMuncher from "../components/audioTranslationMuncher/muncher/Editor/AudioTranslationEditorMuncher";
 import AudioTranslationViewerMuncher from "../components/audioTranslationMuncher/muncher/Viewer/AudioTranslationViewerMuncher";
+import AudioTranslationNavigator from "../components/audioTranslationMuncher/muncher/Navigation/AudioTranslationNavigator";
+import { useAudioTranslationContext } from "../components/audioTranslationMuncher/muncher/Navigation/AudioTranslationContext";
 
 export function MuncherTest() {
+  const audioTranslation = useAudioTranslationContext();
   const { currentProjectRef } = useContext(currentProjectContext);
   const { debugRef } = useContext(debugContext);
   const { i18nRef } = useContext(i18nContext);
   const [currentBurrito, setCurrentBurrito] = useState(null);
-  const [modified, setModified] = useState(false);
   const { systemBcv } = useContext(bcvContext);
   useEffect(() => {
     async function getSummary() {
@@ -63,6 +67,16 @@ export function MuncherTest() {
           requireNet={false}
         />
       </Box>
+      <AdvancedAppBar
+        navigation={
+          metadata && (
+            <AudioTranslationNavigator
+              navigation={audioTranslation.navigation}
+              i18nRef={i18nRef}
+            />
+          )
+        }
+      />
       <Box sx={{ paddingLeft: 2, paddingTop: 10, flexShrink: 0 }}>
         <WrapperNav flavor={"audioTranslation"} />
       </Box>
@@ -85,6 +99,8 @@ export function MuncherTest() {
               debugRef={debugRef}
               i18nRef={i18nRef}
               currentBurrito={currentBurrito}
+              setNavigation={audioTranslation.setNavigation}
+              enableNavigation={false}
             />
           </Box>
         )}

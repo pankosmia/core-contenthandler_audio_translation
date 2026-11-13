@@ -7,10 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import {
-  PanDialog,
-  PanDialogActions,
-} from "pankosmia-rcl";
+import { PanDialog, PanDialogActions } from "pankosmia-rcl";
 import { postEmpty } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 
@@ -21,7 +18,10 @@ import {
   loadGeneratedAtMap,
   saveGeneratedAt,
 } from "../Editor/EditorTools/lib/audioGeneratedAt";
-import { projectPaths, loadProject } from "../Editor/EditorTools/lib/storageUtil";
+import {
+  projectPaths,
+  loadProject,
+} from "../Editor/EditorTools/lib/storageUtil";
 import getFfmpegPath from "./EditorTools/helpers/getFfmpegPath";
 
 // Derive the segments of one book straight from the plan, at the chosen
@@ -77,7 +77,13 @@ function deriveChapters(plan, bookCode, segmentation) {
     });
 }
 
-function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
+function AudioTranslationEditorMuncher({
+  metadata,
+  i18nRef,
+  debugRef,
+  setNavigation,
+  enableNavigation = true,
+}) {
   const theme = useTheme();
   const [ffmpegModalOpen, setFfmpegModalOpen] = useState(false);
   const [plan, setPlan] = useState(null);
@@ -103,7 +109,10 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
         }
 
         if (!r.ok) {
-          const body = await r.clone().text().catch(() => "");
+          const body = await r
+            .clone()
+            .text()
+            .catch(() => "");
           throw new Error(`HTTP ${r.status} - ${body}`);
         }
 
@@ -181,6 +190,31 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
   const goToBook = (idx) => {
     if (idx >= 0 && idx < books.length) setSelectedBook(books[idx]);
   };
+
+  const nav = useMemo(
+    () => ({
+      book: selectedBook,
+      books,
+      segmentation,
+      onSelectBook: setSelectedBook,
+      segIndex,
+      flatSegments,
+      onSelectSegment: setSegIndex,
+      onPrevBook: () => goToBook(bookIndex - 1),
+      onPrevSegment: () => setSegIndex(segIndex - 1),
+      onNextSegment: () => setSegIndex(segIndex + 1),
+      onNextBook: () => goToBook(bookIndex + 1),
+      prevBookDisabled: bookIndex <= 0,
+      prevSegmentDisabled: segIndex <= 0,
+      nextSegmentDisabled: segIndex >= flatSegments.length - 1,
+      nextBookDisabled: bookIndex < 0 || bookIndex >= books.length - 1,
+    }),
+    [bookIndex, books, flatSegments, segIndex, segmentation, selectedBook],
+  );
+
+  useEffect(() => {
+    setNavigation?.(nav);
+  }, [setNavigation, nav]);
 
   const postAudioCompile = async (endpoint, payload, errorMessage) => {
     const response = await fetch(
@@ -303,29 +337,15 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
           closeLabel="Close"
         />
       </PanDialog>
-      <AudioEditorTools
-        compileAudio={current ? compileAudio : null}
-        generatedAt={segmentKey ? generatedAtMap[segmentKey] : null}
-        nav={{
-          book: selectedBook,
-          books,
-          segmentation,
-          onSelectBook: setSelectedBook,
-          segIndex,
-          flatSegments,
-          onSelectSegment: setSegIndex,
-          onPrevBook: () => goToBook(bookIndex - 1),
-          onPrevSegment: () => setSegIndex(segIndex - 1),
-          onNextSegment: () => setSegIndex(segIndex + 1),
-          onNextBook: () => goToBook(bookIndex + 1),
-          prevBookDisabled: bookIndex <= 0,
-          prevSegmentDisabled: segIndex <= 0,
-          nextSegmentDisabled: segIndex >= flatSegments.length - 1,
-          nextBookDisabled: bookIndex < 0 || bookIndex >= books.length - 1,
-        }}
-        i18nRef={i18nRef}
-        debugRef={debugRef}
-      />
+      {enableNavigation && (
+        <AudioEditorTools
+          compileAudio={current ? compileAudio : null}
+          generatedAt={segmentKey ? generatedAtMap[segmentKey] : null}
+          i18nRef={i18nRef}
+          debugRef={debugRef}
+          navigation={nav}
+        />
+      )}
 
       <Box sx={{ padding: 2 }}>
         {current ? (
@@ -341,7 +361,6 @@ function AudioTranslationEditorMuncher({ metadata, i18nRef, debugRef }) {
               mainTrackName={`${selectedBook} ${current.ref}`}
             />
           </>
-
         ) : (
           <Typography sx={{ color: "text.secondary", padding: 2 }}>
             {doI18n(
