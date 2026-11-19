@@ -169,7 +169,30 @@ export default function NewAudioTranslationContent() {
         }
     }, [open]);
 
-    const handleCreate = async () => {
+    const reloadIngredient = async (repoPath) => {
+        const url = `/api/burrito/metadata/remake-ingredients/${repoPath}`;
+        const reloadResponse = await postJson(url, debugRef.current);
+        if (reloadResponse.ok) {
+            enqueueSnackbar(
+                doI18n("pages:content:remake_metadata", i18nRef.current) +
+                " " +
+                repoPath,
+                {
+                    variant: "success",
+                },
+            );
+        } else {
+            enqueueSnackbar(
+                doI18n("pages:content:could_not_reload", i18nRef.current) +
+                " " +
+                repoPath,
+                {
+                    variant: "error",
+                },
+            );
+        }
+    };
+    const handleCreate = async (r) => {
         // versification for plan comes from plan
         let planJson = null;
         let submittedVersification = versification;
@@ -228,6 +251,7 @@ export default function NewAudioTranslationContent() {
                 `/api/burrito/ingredient/raw/${repoPath}?ipath=plan.json&update_ingredients`,
                 JSON.stringify({ payload: JSON.stringify(storedPlan, null, 2) }),
             );
+            reloadIngredient(repoPath);
             if (!storePlanResponse.ok) {
                 setErrorMessage(
                     `${doI18n("pages:core-contenthandler_audio_translation:audio_translation_creation_error", i18nRef.current)}: ${storePlanResponse.status}`,
