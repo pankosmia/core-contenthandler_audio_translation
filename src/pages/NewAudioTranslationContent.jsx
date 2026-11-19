@@ -14,6 +14,7 @@ import ContentDocument from "../AudioTranslationContent/ContentDocument";
 import LanguagePicker from "../AudioTranslationContent/LanguagePicker";
 import NameDocument from "../AudioTranslationContent/NameDocument";
 import ErrorDialog from "../AudioTranslationContent/ErrorDialog";
+import { enqueueSnackbar } from "notistack";
 
 export default function NewAudioTranslationContent() {
     const { i18nRef } = useContext(i18nContext);
