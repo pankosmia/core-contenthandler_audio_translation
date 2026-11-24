@@ -100,7 +100,7 @@ export function MuncherTest() {
               i18nRef={i18nRef}
               currentBurrito={currentBurrito}
               setNavigation={audioTranslation.setNavigation}
-              enableNavigation={false}
+              enableNavigation={true}
             />
           </Box>
         )}

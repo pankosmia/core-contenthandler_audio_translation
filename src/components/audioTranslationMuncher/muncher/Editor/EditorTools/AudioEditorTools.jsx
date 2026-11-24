@@ -1,6 +1,5 @@
 import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { enqueueSnackbar } from "notistack";
 import { doI18n } from "pankosmia-lib/i18n";
 
 import LayoutIcon from "./layouts/LayoutIcon";
@@ -19,27 +18,6 @@ function AudioEditorTools({
   navigation,
 }) {
   const navigate = useNavigate();
-
-  const compileAudioHandler = async () => {
-    try {
-      // compileAudio renvoie false lorsqu'il court-circuite pour ouvrir le
-      // modal FFmpeg : rien n'a été compilé, on n'affiche pas de succès.
-      const compiled = await compileAudio();
-      if (compiled === false) {
-        return;
-      }
-      enqueueSnackbar(
-        doI18n(
-          "pages:core-local-workspace:audio_compiled",
-          i18nRef.current,
-          debugRef.current,
-        ),
-        { variant: "success" },
-      );
-    } catch (error) {
-      enqueueSnackbar(error.message, { variant: "error" });
-    }
-  };
 
   return (
     <Box
@@ -71,7 +49,7 @@ function AudioEditorTools({
             <span>
               <IconButton
                 disabled={!compileAudio}
-                onClick={compileAudioHandler}
+                onClick={compileAudio}
               >
                 <AudioCompileIcon />
               </IconButton>

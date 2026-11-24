@@ -2,18 +2,15 @@ import { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Typography,
-  DialogContent,
-  DialogContentText,
-  useTheme,
 } from "@mui/material";
 
-import { PanDialog, PanDialogActions } from "pankosmia-rcl";
+import { AssetDownloadDialog } from "pankosmia-rcl";
 import { postEmpty } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
+import { enqueueSnackbar } from "notistack";
 
 import AudioRecorder from "./EditorTools/AudioRecorder";
 import AudioEditorTools from "./EditorTools/AudioEditorTools";
-import FfmpegDownloadButton from "./EditorTools/FfmpegDownloadButton";
 import {
   loadGeneratedAtMap,
   saveGeneratedAt,
@@ -84,7 +81,6 @@ function AudioTranslationEditorMuncher({
   setNavigation,
   enableNavigation = true,
 }) {
-  const theme = useTheme();
   const [ffmpegModalOpen, setFfmpegModalOpen] = useState(false);
   const [plan, setPlan] = useState(null);
   const [selectedBook, setSelectedBook] = useState("");
@@ -240,6 +236,28 @@ function AudioTranslationEditorMuncher({
       );
     }
   };
+  const compileAudioHandler = async () => {
+    try {
+      const compiled = await compileAudio();
+      if (compiled === false) {
+        return;
+      }
+      enqueueSnackbar(
+        doI18n(
+          "pages:core-local-workspace:audio_compiled",
+          i18nRef.current,
+          debugRef.current,
+        ),
+        { variant: "success" },
+      );
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
+  };
+  const handleCompileffmpeg = async () => {
+    setFfmpegModalOpen(false);
+    await compileAudioHandler();
+  };
 
   // Renvoie false quand on court-circuite pour afficher le modal FFmpeg (rien
   // n'a été compilé) afin que l'appelant n'affiche pas de snackbar de succès.
@@ -318,28 +336,15 @@ function AudioTranslationEditorMuncher({
 
   return (
     <Box>
-      <PanDialog
-        titleLabel="FFmpeg not installed"
+      <AssetDownloadDialog
         isOpen={ffmpegModalOpen}
         closeFn={() => setFfmpegModalOpen(false)}
-        size="sm"
-      >
-        <DialogContent>
-          <DialogContentText sx={{ mb: 2 }}>
-            FFmpeg is required to compile audio and is not installed yet.
-            Download it below, then generate the audio again.
-          </DialogContentText>
-          <FfmpegDownloadButton />
-        </DialogContent>
-        <PanDialogActions
-          onlyCloseButton
-          closeFn={() => setFfmpegModalOpen(false)}
-          closeLabel="Close"
-        />
-      </PanDialog>
+        asset={"ffmpeg"}
+        actionButtonPlugin={handleCompileffmpeg}
+      />
       {enableNavigation && (
         <AudioEditorTools
-          compileAudio={current ? compileAudio : null}
+          compileAudio={current ? compileAudioHandler : null}
           generatedAt={segmentKey ? generatedAtMap[segmentKey] : null}
           i18nRef={i18nRef}
           debugRef={debugRef}
